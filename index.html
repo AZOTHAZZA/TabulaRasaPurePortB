@@ -4,26 +4,53 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Tabula Rasa - PURE PORT B</title>
 <style>
-:root { --ratio: 1.618; --bg: #0b0e11; --surface: #15191d; --accent: #6c757d; --text: #e9ecef; --border: #2d333b; }
-body { font-family: 'Inter', 'Noto Sans JP', sans-serif; margin: 0; background: var(--bg); color: var(--text); height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-#viewport { flex-grow: 1; overflow-y: auto; padding: 15px; padding-bottom: 150px; }
-header { background: #000; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); }
+/* カラーパレットを深海・電脳的な青へ再定義 */
+:root { 
+    --ratio: 1.618; 
+    --bg: #05070a;      /* Aよりさらに深い黒 */
+    --surface: #0d1117; 
+    --accent: #1a3a5a;  /* 深みのある青 */
+    --text: #cbd5e0; 
+    --border: #1a202c; 
+    --cyan: #00d4ff;    /* 発光するシアン */
+}
+
+body { 
+    font-family: 'Inter', 'Noto Sans JP', sans-serif; 
+    margin: 0; background: var(--bg); color: var(--text); 
+    height: 100dvh; display: flex; flex-direction: column; overflow: hidden; 
+}
+
+#viewport { 
+    flex-grow: 1; overflow-y: auto; padding: 15px; 
+    scroll-behavior: smooth; padding-bottom: 150px; 
+}
+
+header { background: #000; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--cyan); }
 .brand { font-weight: 800; color: #fff; font-size: 0.85rem; letter-spacing: 0.15em; }
 nav { display: flex; background: #000; border-bottom: 1px solid #333; }
 .tab { flex: 1; padding: 12px; border: none; background: none; color: #666; font-size: 0.65rem; cursor: pointer; }
-.tab.active { color: #fff; border-bottom: 2px solid var(--accent); background: #1a1a1a; }
+.tab.active { color: var(--cyan); border-bottom: 2px solid var(--cyan); background: #0d1117; }
+
 .pane { display: none; }
 .pane.active { display: block; }
 .card { background: var(--surface); border-radius: 10px; border: 1px solid var(--border); padding: 15px; margin-bottom: 15px; }
-.card-title { font-size: 0.6rem; font-weight: 700; color: #768390; margin-bottom: 10px; text-transform: uppercase; border-left: 3px solid var(--accent); padding-left: 10px; }
+.card-title { font-size: 0.6rem; font-weight: 700; color: #4a5568; margin-bottom: 10px; text-transform: uppercase; border-left: 3px solid var(--cyan); padding-left: 10px; }
+
 .grid-mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; }
-.data-node { background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 8px; border-radius: 6px; text-align: center; }
-.value { font-family: monospace; font-weight: bold; font-size: 0.75rem; color: #00ff00; }
+.data-node { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 8px; border-radius: 6px; text-align: center; }
+.value { font-family: monospace; font-weight: bold; font-size: 0.75rem; color: var(--cyan); text-shadow: 0 0 5px rgba(0, 212, 255, 0.3); }
+
 .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.75rem; margin-top: 5px; }
 .btn-neutral { background: var(--accent); color: #fff; }
 .btn-danger { background: #a71d2a; color: #fff; }
-.btn-bridge { background: #4a3f35; color: #d4a017; border: 1px solid #d4a017; }
-input, select { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #444; border-radius: 6px; background: #000; color: #fff; }
+.btn-bridge { background: #0a192f; color: var(--cyan); border: 1px solid var(--cyan); }
+.btn-bridge:hover { background: var(--cyan); color: #000; }
+
+input, select { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #2d3748; border-radius: 6px; background: #000; color: #fff; }
+
+#import-manifest.active { animation: pulse-cyan 2s infinite; color: var(--cyan); border: 1px solid var(--cyan); }
+@keyframes pulse-cyan { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 </style>
 </head>
 <body>
@@ -86,7 +113,9 @@ function render() {
     renderGrid('total-display', studio.ports.warehouse, studio.ports.export, studio.ports.import);
     renderGrid('export-display', studio.ports.export);
     const inc = localStorage.getItem('TR_Bridge_to_PORT_B');
-    document.getElementById('import-manifest').innerHTML = inc ? "[捕捉] シグナル検知" : "待機なし";
+    const display = document.getElementById('import-manifest');
+    if(inc) { display.classList.add('active'); display.innerHTML = "[捕捉] シグナル検知"; }
+    else { display.classList.remove('active'); display.innerHTML = "待機なし"; }
     document.getElementById('z-val').textContent = studio.z.toFixed(4);
     document.getElementById('w-val').textContent = studio.w.toFixed(4);
 }
@@ -142,7 +171,7 @@ function showPane(id) {
     if(event) event.target.classList.add('active');
 }
 
-function updateLabels() { /* 拡張用 */ }
+function updateLabels() { /* 言語切替拡張用 */ }
 function executeClean() { if(confirm("初期化しますか？")) { localStorage.clear(); location.reload(); } }
 
 const sel = document.getElementById('color-choice'); 
