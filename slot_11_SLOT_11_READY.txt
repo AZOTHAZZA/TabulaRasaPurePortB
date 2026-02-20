@@ -1,0 +1,4 @@
+--- PURE PROTOCOL ---
+ID: 11
+Body: 1.618
+Content: Standby for further incarnation. Ratio: 1.698

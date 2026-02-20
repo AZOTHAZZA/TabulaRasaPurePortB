@@ -1,0 +1,3 @@
+Body: 1.618
+Logic: 3.33
+Label: FREE_INPUT_25

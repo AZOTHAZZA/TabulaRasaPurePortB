@@ -1,0 +1,3 @@
+Body: 1.618
+Logic: 4.664
+Label: FREE_INPUT_32

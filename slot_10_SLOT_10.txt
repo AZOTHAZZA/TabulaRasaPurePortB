@@ -1,0 +1,3 @@
+--- PURE PROTOCOL ---
+Frequency: 1.618
+--- STATUS: SYNCED ---

@@ -1,0 +1,5 @@
+--- PURE PROTOCOL ---
+ID: 2
+Body: 1.618
+Content: Raw: 150.0 -> Pure Adjusted: 92.707
+This is the basis of Economic Order.
