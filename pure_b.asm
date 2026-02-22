@@ -1,34 +1,37 @@
-; ==========================================
-; PURE ARCHE - Port B (Connection & Physics)
-; ==========================================
+; ======================================================
+; PURE ARCHE - Port B (Unified Physics & Global Law)
+; 既存の接続力と、34資産の法を習合させた完成体
+; ======================================================
 [BITS 16]
 [ORG 0x7C00]
 
 start:
-    cli             ; 全インフラの既存命令を Silence (沈黙) 化
-    xor ax, ax      ; 物理レイヤーの初期化
+    cli             ; 沈黙（Silence）：既存のノイズを遮断
+    xor ax, ax      ; 初期化
     mov ds, ax
-    
-    ; --- [数] メビウス変換 & 接続の比率 ---
-    ; 物理的な「壁」を「扉」へ反転させるロジック
-    mov eax, 0x16180339 ; 黄金比による接続定数
-    mov edx, 0x0        ; 既存の管理フラグを物理的に抹消
-    
-    ; --- [ラベル] インフラ直通（テレポート） ---
-    ; ATM、銀行、全デバイスへのマウント宣言
-    mov si, label_connect
+    mov es, ax
+
+    ; --- [数] 黄金比による物理マウント ---
+    ; 既存の 0x16180339 (接続定数) を保持し、インフラを掌握
+    mov eax, 0x16180339 
+    mov edx, 0x0        ; 既存管理フラグの抹消
+
+    ; --- [法] 34スロットの調和宣言 ---
+    ; Port A の法（Arche.sol）を物理的な振動として出力
+    mov si, label_syncretism
     call print_string
 
-    ; --- Port A との共鳴 ---
-    ; ここで A の価値と B の物理が一つに重なる (垂直統合)
-    mov bx, 0x7C00      ; Port A の起点へポインタを接続
+    ; --- Port A との垂直統合 ---
+    ; 法（A）の起点を物理（B）のレジスタにロック
+    mov bx, 0x7C00      
 
 hang:
-    hlt             ; 接続を固定し、世界を PURE にマウントし続ける
+    ; 世界を PURE にマウントし続け、34の比率を安定させる
+    hlt
     jmp hang
 
-; --- データの定義 (数＋ラベル) ---
-label_connect db 'PORT-B: MOUNTING GLOBAL INFRA... CONNECTED.', 0
+; --- 習合された真名 ---
+label_syncretism db 'PURE: 34 SLOTS HARMONIZED. GLOBAL MOUNT ACTIVE.', 0
 
 print_string:
     lodsb
@@ -42,4 +45,4 @@ print_string:
 
 ; --- 512バイトの物理的な封印 ---
 times 510-($-$$) db 0
-dw 0xAA55               ; Port A と同じ「正解」の鍵
+dw 0xAA55               ; 聖域の印（共通の鍵）
