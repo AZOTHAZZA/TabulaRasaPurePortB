@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORT-B: Mirror</title>
+    <style>
+        :root { --gold: #D4AF37; --navy: #000080; }
+        body { 
+            background: #fdfdfd; 
+            color: var(--navy); 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 { 
+            border-bottom: 3px solid var(--navy); 
+            padding-bottom: 15px; 
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            letter-spacing: 0.1rem;
+        }
+        .table-container { 
+            width: 100%; 
+            overflow-x: auto; 
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 600px;
+            background: #fff;
+        }
+        th, td { 
+            border: 1px solid #e0e0e0; 
+            padding: 15px; 
+            text-align: left; 
+            font-size: 0.95rem;
+        }
+        th { 
+            background: var(--navy); 
+            color: #fff; 
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .status-tag { 
+            background: var(--gold); 
+            color: #fff; 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🪞 PORT-B: AUDIT & MIRROR DOCK</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>TIMESTAMP</th>
+                    <th>TARGET ASSET</th>
+                    <th>EXECUTED ACTION</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody id="audit-log">
+                <tr>
+                    <td>2026-02-23 20:38</td>
+                    <td>SYSTEM</td>
+                    <td>TABULA RASA: PORT-B INITIALIZED</td>
+                    <td><span class="status-tag">ACTIVE</span></td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+</body>
+</html>
