@@ -10,9 +10,7 @@
             background: #fdfdfd; 
             color: var(--navy); 
             font-family: 'Helvetica Neue', Arial, sans-serif; 
-            margin: 0; 
-            padding: 20px;
-            box-sizing: border-box;
+            margin: 0; padding: 20px; box-sizing: border-box;
         }
         h1 { 
             border-bottom: 3px solid var(--navy); 
@@ -21,38 +19,16 @@
             letter-spacing: 0.1rem;
         }
         .table-container { 
-            width: 100%; 
-            overflow-x: auto; 
-            margin-top: 30px;
+            width: 100%; overflow-x: auto; margin-top: 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            min-width: 600px;
-            background: #fff;
-        }
-        th, td { 
-            border: 1px solid #e0e0e0; 
-            padding: 15px; 
-            text-align: left; 
-            font-size: 0.95rem;
-        }
-        th { 
-            background: var(--navy); 
-            color: #fff; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05rem;
-        }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; background: #fff; }
+        th, td { border: 1px solid #e0e0e0; padding: 15px; text-align: left; font-size: 0.95rem; }
+        th { background: var(--navy); color: #fff; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05rem; }
         tr:nth-child(even) { background: #f9f9f9; }
         .status-tag { 
-            background: var(--gold); 
-            color: #fff; 
-            padding: 4px 10px; 
-            border-radius: 20px; 
-            font-size: 0.75rem; 
-            font-weight: bold;
+            background: var(--gold); color: #fff; padding: 4px 10px; border-radius: 20px; 
+            font-size: 0.75rem; font-weight: bold;
         }
     </style>
 </head>
@@ -75,8 +51,34 @@
                     <td>TABULA RASA: PORT-B INITIALIZED</td>
                     <td><span class="status-tag">ACTIVE</span></td>
                 </tr>
-                </tbody>
+            </tbody>
         </table>
     </div>
+
+    <script>
+        const auditLog = document.getElementById('audit-log');
+        let lastId = null;
+
+        // 【同期回路】1秒ごとに PortA からの出港（輸出）がないか監視
+        setInterval(() => {
+            const rawData = localStorage.getItem('PURE_TRADE_SYNC');
+            if (rawData) {
+                const data = JSON.parse(rawData);
+                // 新しいID（タイムスタンプ）の時だけ、鏡に反映
+                if (data.id !== lastId) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${data.time}</td>
+                        <td>DETECTED</td>
+                        <td>${data.action}</td>
+                        <td><span class="status-tag">SYNCED</span></td>
+                    `;
+                    // 最新の執行ログを一番上に挿入
+                    auditLog.prepend(tr);
+                    lastId = data.id;
+                }
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
